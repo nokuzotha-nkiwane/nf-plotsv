@@ -18,31 +18,7 @@ include { PLOTSR_PAIRWISE_OLD } from './modules/plotsr/main'
 Samplesheet: 
 name,fasta
 */
-log.info """\
-=======================================================================================================================
-=======================================================================================================================
-                                                    nf-plotsv
-                                                    ---------
-                       Plot structural variation across genomes using the 'Schneeberger tools'
------------------------------------------------------------------------------------------------------------------------
-Niklas Schandry                                  niklas@bio.lmu.de                          github.com/nschan/nf-plotsv      
------------------------------------------------------------------------------------------------------------------------
-  Results directory  : ${params.out}
 
-  Parameters:
-     samplesheet     : ${params.samplesheet}
-     reference       : ${params.reference}
-     ref_genome      : ${params.ref_genome}
-     reorient        : ${params.reorient}
-     pairwise        : ${params.pairwise}
-     subset_pattern  : ${params.subset_pattern}
-     plotsr config   : ${params.plotsr_conf}
-     plotsr args     : ${params.plotsr_args}
-     plotsr tracks   : ${params.plotsr_tracks}
-=======================================================================================================================
-=======================================================================================================================
-"""
-    .stripIndent(false)
 /*
   PREPARE GENOMES
   ---------------
@@ -93,6 +69,32 @@ This workflow is simple, and largely an exercise in manipulating channels.
 */
 
 workflow PLOTSV {
+  log.info """\
+=======================================================================================================================
+=======================================================================================================================
+                                                    nf-plotsv
+                                                    ---------
+                       Plot structural variation across genomes using the 'Schneeberger tools'
+-----------------------------------------------------------------------------------------------------------------------
+Niklas Schandry                                  niklas@bio.lmu.de                          github.com/nschan/nf-plotsv      
+-----------------------------------------------------------------------------------------------------------------------
+  Results directory  : ${params.out}
+
+  Parameters:
+     samplesheet     : ${params.samplesheet}
+     reference       : ${params.reference}
+     ref_genome      : ${params.ref_genome}
+     reorient        : ${params.reorient}
+     pairwise        : ${params.pairwise}
+     subset_pattern  : ${params.subset_pattern}
+     plotsr config   : ${params.plotsr_conf}
+     plotsr args     : ${params.plotsr_args}
+     plotsr tracks   : ${params.plotsr_tracks}
+=======================================================================================================================
+=======================================================================================================================
+"""
+    .stripIndent(false)
+
   ch_input = Channel.fromPath(params.samplesheet) 
               | splitCsv(header:true) 
 

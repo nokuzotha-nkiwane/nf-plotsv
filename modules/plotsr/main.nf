@@ -11,20 +11,18 @@ process PLOTSR {
         tuple val(meta), path(syri_out)
         val reference 
         path plotsr_conf 
-        path extra_args
+        val extra_args
 
     output:
         tuple val(meta), path("*plotsr.pdf"), emit: figure
 
-    def plotsr_conf = file("$projectDir/assets/plotsr_config.conf", checkIfExists: true)
-    //def plotsr_args = extra_args ?: ''
     script:
         """
         plotsr \\
             ${meta}_on_${reference}.syri.out $reference $meta \\
             -H 8 -W 5 \\
             --cfg $plotsr_conf \\
-            #$plotsr_args \\
+            ${extra_args} \\
             -o ${meta}_on_${reference}.plotsr.pdf 
         """
 }
@@ -166,4 +164,4 @@ process PLOTSR_PAIRWISE_OLD {
         ${plotsr_tracks} \\
         -o plot.pdf
     """
-} 
+}
